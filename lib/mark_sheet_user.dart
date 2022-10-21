@@ -65,18 +65,16 @@ class MarkSheetUser {
   Future<List<String>> getMarkSheetListFromFirebase() async {
     List<String> markSheetList = [];
 
-    for (int i = 0; i < _markSheetNum; i++) {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(_userId)
-          .collection("markSheets")
-          .get()
-          .then((QuerySnapshot querySnapshot) => {
-                querySnapshot.docs.forEach((doc) {
-                  markSheetList.add(doc.id);
-                })
-              });
-    }
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_userId)
+        .collection("markSheets")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                markSheetList.add(doc.id);
+              })
+            });
 
     _markSheetList = markSheetList;
     return Future<List<String>>.value(markSheetList);
@@ -151,21 +149,19 @@ class MarkSheetUser {
   Future<List<String>> getUsedDateListFromFirebase(
       String markSheetName, int usedNum) async {
     List<String> usedDateList = [];
-    for (int i = 0; i < usedNum; i++) {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(_userId)
-          .collection("markSheets")
-          .doc(markSheetName)
-          .collection("histories")
-          .get()
-          .then((QuerySnapshot querySnapshot) => {
-                querySnapshot.docs.forEach((doc) {
-                  String usedDate = doc.get("usedDate");
-                  usedDateList.add(usedDate);
-                })
-              });
-    }
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_userId)
+        .collection("markSheets")
+        .doc(markSheetName)
+        .collection("histories")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                String usedDate = doc.get("usedDate");
+                usedDateList.add(usedDate);
+              })
+            });
 
     return Future<List<String>>.value(usedDateList);
   }
@@ -173,21 +169,19 @@ class MarkSheetUser {
   Future<List<int>> getScoreListFromFirebase(
       String markSheetName, int usedNum) async {
     List<int> scoreList = [];
-    for (int i = 0; i < usedNum; i++) {
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(_userId)
-          .collection("markSheets")
-          .doc(markSheetName)
-          .collection("histories")
-          .get()
-          .then((QuerySnapshot querySnapshot) => {
-                querySnapshot.docs.forEach((doc) {
-                  int score = doc.get("score");
-                  scoreList.add(score);
-                })
-              });
-    }
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(_userId)
+        .collection("markSheets")
+        .doc(markSheetName)
+        .collection("histories")
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                int score = doc.get("score");
+                scoreList.add(score);
+              })
+            });
 
     return Future<List<int>>.value(scoreList);
   }
